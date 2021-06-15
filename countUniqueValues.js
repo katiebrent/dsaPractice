@@ -2,6 +2,8 @@
 //and counts the unique values in the array.
 //there can be negative numbers in the array, but it will always be sorted
 
+//my solution
+
 function countUniqueValues (arr) {
   if (arr.length < 2) {
     return arr.length
