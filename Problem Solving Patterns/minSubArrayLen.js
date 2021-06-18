@@ -1,32 +1,38 @@
 //write a function called minSubArrayLen which accepts two parameters:
 //an array of positive integers and a positive integer
 
-function minSubArrayLen (arr, sum) {
+//function should return the minimal length of a contiguous subarray
+//of which the sum is greater than or equal to the integer passed to
+//the function
 
-  var minCount = Infinity;
+//if there isn't one, return zero
 
-  var curr = 0;
-  var end = 0;
+function minSubArrayLen(nums, sum) {
+  let total = 0;
+  let start = 0;
+  let end = 0;
+  let minLen = Infinity;
 
-  var minSum= 0;
-
-  while(end < arr.length) {
-    if(arr[curr] >= sum) {
-      return 1;
+  while (start < nums.length) {
+    // if current window doesn't add up to the given sum then
+		// move the window to right
+    if(total < sum && end < nums.length){
+      total += nums[end];
+			end++;
     }
-    if(minSum >= sum) {
-      let tempCount = end - curr + 1;
-      if(tempCount < minCount) {
-        minCount = tempCount;
-        curr++;
-        end = curr;
-      }
-    } else {
-      minSum += arr[curr];
-      end++
+    // if current window adds up to at least the sum given then
+		// we can shrink the window
+    else if(total >= sum){
+      minLen = Math.min(minLen, end-start);
+			total -= nums[start];
+			start++;
     }
-
+    // current total less than required total but we reach the end, need this or else we'll be in an infinite loop
+    else {
+      break;
+    }
   }
-  return minCount;
+
+  return minLen === Infinity ? 0 : minLen;
 }
 
